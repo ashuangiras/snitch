@@ -30,7 +30,7 @@ func LogMiddleware(w http.ResponseWriter, r *http.Request, next http.HandlerFunc
 	newEntry := &NetworkLog{
 		ServiceName:        ServiceName,
 		LogType:            "network_log",
-		RemoteIP:           r.Header.Get("X-FORWARDED_FOR"),
+		RemoteIP:           r.Header.Get("X-FORWARDED-FOR"),
 		UserAgent:          r.Header.Get("user-agent"),
 		RequestURL:         r.URL.Path,
 		StartTime:          starttime,
