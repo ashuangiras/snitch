@@ -38,10 +38,7 @@ func Init(brokerURL, serviceName, topic string) error {
 func createClientOptions(clientId string, uri *url.URL) *mqtt.ClientOptions {
 	opts := mqtt.NewClientOptions()
 	opts.AddBroker(fmt.Sprintf("ws://%s", uri.Host))
-	// opts.SetUsername(uri.User.Username())
-	// password, _ := uri.User.Password()
-	// opts.SetPassword(password)
-	// opts.SetClientID(clientId)
+
 	return opts
 }
 

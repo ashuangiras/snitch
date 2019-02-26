@@ -18,6 +18,7 @@ type NetworkLog struct {
 	StartTime          time.Time     `json:"start_time"`
 	ResponseTime       time.Duration `json:"duration"`
 	HTTPStatusReturned int           `json:"http_status"`
+	ResponseSize       int           `json:"response_size"`
 }
 
 //LogMiddleware : also compatible with negroni
@@ -29,13 +30,14 @@ func LogMiddleware(w http.ResponseWriter, r *http.Request, next http.HandlerFunc
 
 	newEntry := &NetworkLog{
 		ServiceName:        ServiceName,
-		LogType:            "network_log",
-		RemoteIP:           r.Header.Get("X-FORWARDED-FOR"),
+		LogType:            "server_network_log",
+		RemoteIP:           r.RemoteAddr,
 		UserAgent:          r.Header.Get("user-agent"),
 		RequestURL:         r.URL.Path,
 		StartTime:          starttime,
 		ResponseTime:       time.Since(starttime),
 		HTTPStatusReturned: res.Status(),
+		ResponseSize:       res.Size(),
 	}
 
 	byt, _ := json.Marshal(newEntry)
